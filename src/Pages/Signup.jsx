@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -8,6 +8,7 @@ const Signup = () => {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { signup } = useUser(); // Import signup from context
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -15,14 +16,15 @@ const Signup = () => {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/v1/signup`,
-        form,
-        { withCredentials: true }
-      );
-      if (res.data.status) navigate('/login');
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await signup(formData); // Use context function
+      if (res?.status) navigate('/login');
     } catch (err) {
-      setError(err.response?.data?.message || 'Signup failed');
+      setError(err.message || 'Signup failed');
     }
   };
 
