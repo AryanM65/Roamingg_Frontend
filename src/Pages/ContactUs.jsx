@@ -10,6 +10,7 @@ export default function ContactUs() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -19,25 +20,43 @@ export default function ContactUs() {
   };
 
   const handleSubmit = async () => {
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
-      alert('Please fill in all required fields');
+    // Validation
+    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+      setError('All fields are required');
       return;
     }
     
     setIsSubmitting(true);
+    setError('');
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitted(true);
-    setIsSubmitting(false);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', message: '' });
-    }, 3000);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Email sending failed');
+      }
+
+      setIsSubmitted(true);
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      }, 3000);
+    } catch (err) {
+      console.error('Submission error:', err);
+      setError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -177,7 +196,7 @@ export default function ContactUs() {
                   
                   <div>
                     <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Phone Number
+                      Phone Number *
                     </label>
                     <input
                       type="tel"
@@ -185,6 +204,7 @@ export default function ContactUs() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
+                      required
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white/50 backdrop-blur-sm"
                       placeholder="Enter your phone number"
                     />
@@ -205,6 +225,12 @@ export default function ContactUs() {
                       placeholder="Tell us about your travel plans or questions..."
                     ></textarea>
                   </div>
+                  
+                  {error && (
+                    <div className="p-4 bg-red-50 text-red-700 rounded-xl">
+                      {error}
+                    </div>
+                  )}
                   
                   <button
                     onClick={handleSubmit}

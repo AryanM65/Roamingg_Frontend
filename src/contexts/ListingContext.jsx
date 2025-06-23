@@ -9,10 +9,10 @@ export const ListingProvider = ({ children }) => {
 
   const createListing = async (formData) => {
     const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/listings/addlisting`,
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/addlisting`,
       formData,
       {
-        headers: { "Content-Type": "multipart/form-data" },
+        // headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       }
     );
@@ -33,7 +33,7 @@ export const ListingProvider = ({ children }) => {
 
   const getListingById = async (id) => {
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/listings/listing/${id}`,
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/listing/${id}`,
       { withCredentials: true }
     );
     setSelectedListing(res.data.listing);
@@ -41,8 +41,8 @@ export const ListingProvider = ({ children }) => {
   };
 
   const checkListingAvailability = async (id, data) => {
-    const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/listings/${id}/availability`,
+    const res = await axios.post(
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/${id}/availability`,
       {
         data, // send body with GET using `axios.get`, which supports this via `config.data`
         withCredentials: true,
@@ -53,12 +53,21 @@ export const ListingProvider = ({ children }) => {
 
   const toggleListingStatus = async (id, isActive) => {
     const res = await axios.put(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/listings/${id}/status`,
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/${id}/status`,
       { isActive },
       { withCredentials: true }
     );
     return res.data;
   };
+
+    const getAllListings = async () => {
+        const res = await axios.get(
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/all-listings`,
+            { withCredentials: true }
+        );
+        setListings(res.data.listings);
+        return res.data.listings;
+    };
 
   return (
     <ListingContext.Provider
@@ -70,6 +79,7 @@ export const ListingProvider = ({ children }) => {
         getListingById,
         checkListingAvailability,
         toggleListingStatus,
+        getAllListings,
       }}
     >
       {children}

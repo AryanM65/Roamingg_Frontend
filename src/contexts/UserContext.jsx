@@ -6,20 +6,25 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
-  // Load user from server on mount (if token exists)
+  // Load user from server on mount
   useEffect(() => {
     fetchUser();
   }, []);
 
   const fetchUser = async () => {
+    setLoading(true); // Start loading
     try {
-      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/get-user-id/${user?._id}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/get-user-profile`,
+        { withCredentials: true }
+      );
       setUser(res.data.user);
     } catch (err) {
       console.error("Fetch user error:", err.response?.data || err.message);
+    } finally {
+      setLoading(false); // Stop loading regardless of success/error
     }
   };
   
@@ -30,7 +35,9 @@ export const UserProvider = ({ children }) => {
         form, // ✅ directly use the object { email, password }
         { withCredentials: true }
         );
+        console.log("res", res);
         setUser(res.data.user);
+        //console.log("user", user);
         return res.data;
     } catch (err) {
         throw err.response?.data || { message: "Login failed" };
@@ -92,7 +99,8 @@ export const UserProvider = ({ children }) => {
       const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/favorites`, {
         withCredentials: true,
       });
-      return res.data.favorites;
+      console.log("res",res);
+      return res.data.favourites;
     } catch (err) {
       console.error("Get favorites error:", err.response?.data || err.message);
       return [];
@@ -152,6 +160,17 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const getAllUsers = async () =>{
+    try{
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/users`, {withCredentials : true,});
+      console.log("res", res);
+      return res.data.users;
+    }
+    catch(error){
+      console.log("error", error);
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -168,6 +187,7 @@ export const UserProvider = ({ children }) => {
         viewUserProfile,
         editUserProfile,
         fetchUser,
+        getAllUsers,
       }}
     >
       {children}
