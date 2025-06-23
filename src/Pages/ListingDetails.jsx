@@ -6,7 +6,7 @@ import { useListing } from "../contexts/ListingContext";
 import { useBooking } from "../contexts/BookingContext"; // Add this import
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ListingMap from "../components/ListingMap";
+import ListingMap from "../Components/ListingMap";
 import ListingImageGallery from "../Components/ListingImageGallery";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { TrashIcon } from "@heroicons/react/24/outline";
