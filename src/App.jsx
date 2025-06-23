@@ -61,8 +61,8 @@ function App() {
           {/* Customer-only Routes */}
           <Route path="/home" element={<CustomerRoute><UserHome /></CustomerRoute>} />
           <Route path="/book/:listingId" element={<CustomerRoute><BookingForm /></CustomerRoute>} />
-          <Route path="/booking-success" element={<CustomerRoute><BookingSuccess /></CustomerRoute>} />
-          <Route path="/booking-cancel" element={<CustomerRoute><BookingCancel /></CustomerRoute>} />
+          <Route path="/booking-success" element={<BookingSuccess />} />
+          <Route path="/booking-cancel" element={<BookingCancel />} />
 
           {/* Admin-only Routes */}
           <Route path="/add-listing" element={<AdminRoute><AddListingForm /></AdminRoute>} />
