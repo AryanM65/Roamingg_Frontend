@@ -239,7 +239,7 @@ const ListingDetails = () => {
                   <span className="text-base font-normal text-gray-500"> / night</span>
                 </div>
                 <div className="text-sm text-gray-500 mt-1">
-                  Available: {selectedListing.availableRooms?.Single || 0}
+                  Total: {selectedListing.availableRooms?.Single || 0}
                 </div>
               </div>
               <div className="bg-gray-50 p-3 rounded-lg">
@@ -249,7 +249,7 @@ const ListingDetails = () => {
                   <span className="text-base font-normal text-gray-500"> / night</span>
                 </div>
                 <div className="text-sm text-gray-500 mt-1">
-                  Available: {selectedListing.availableRooms?.Double || 0}
+                 Total: {selectedListing.availableRooms?.Double || 0}
                 </div>
               </div>
             </div>

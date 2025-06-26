@@ -477,7 +477,7 @@ const AllListings = () => {
 
                   <div className="mt-6 flex justify-between items-center">
                     <div className="bg-gray-100 rounded-lg px-3 py-2">
-                      <p className="text-xs text-gray-600">AVAILABLE ROOMS</p>
+                      <p className="text-xs text-gray-600">TOTAL ROOMS</p>
                       <div className="flex space-x-3 mt-1">
                         {Object.entries(listing.availableRooms).map(([type, count]) => (
                           <div key={type} className="text-center">

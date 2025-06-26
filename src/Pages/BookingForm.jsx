@@ -262,7 +262,7 @@ const BookingForm = () => {
               <div className="flex justify-between items-center mb-2">
                 <label className="font-medium">Single Rooms</label>
                 <span className="text-sm text-gray-500">
-                  Available: {availableSingle} | ${selectedListing.pricePerNight.Single}/night
+                  Total: {availableSingle} | ${selectedListing.pricePerNight.Single}/night
                 </span>
               </div>
               <div className="flex items-center">
@@ -293,7 +293,7 @@ const BookingForm = () => {
               <div className="flex justify-between items-center mb-2">
                 <label className="font-medium">Double Rooms</label>
                 <span className="text-sm text-gray-500">
-                  Available: {availableDouble} | ${selectedListing.pricePerNight.Double}/night
+                  Total: {availableDouble} | ${selectedListing.pricePerNight.Double}/night
                 </span>
               </div>
               <div className="flex items-center">

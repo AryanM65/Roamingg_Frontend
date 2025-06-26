@@ -123,12 +123,12 @@ const LandingPage = () => {
               onClick={handleSignup}
               className="bg-gradient-to-r from-teal-500 to-cyan-600 text-white py-5 px-10 rounded-2xl font-bold text-xl hover:shadow-2xl hover:shadow-teal-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3"
             >
-              <span>Start Your Journey</span>
+              <span>Start Your Journey Today</span>
               <ArrowRight className="w-6 h-6" />
             </button>
             <button className="bg-white/10 backdrop-blur-md text-white py-5 px-10 rounded-2xl font-bold text-xl hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-3 border border-white/20">
-              <Play className="w-6 h-6" />
-              <span>Watch Video</span>
+              {/* <Play className="w-6 h-6" />
+              <span>Watch Video</span> */}
             </button>
           </div>
 
@@ -329,7 +329,7 @@ const LandingPage = () => {
                     A
                   </div>
                   <h3 className="text-3xl font-bold mb-2">Aryan Mahajan</h3>
-                  <p className="text-xl text-teal-100">Founder & CEO</p>
+                  <p className="text-xl text-teal-100">Founder</p>
                 </div>
               </div>
               <div className="p-12 flex items-center">
